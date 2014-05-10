@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B2FFC839-4A21-4336-BFF6-F2927F87FA17}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Embryo</RootNamespace>
+    <AssemblyName>embryoA</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GH_IO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a29997d2e6b4f97, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\AppData\Roaming\McNeel\Rhinoceros\5.0\Plug-ins\Grasshopper {B45A29B1-4343-4035-989E-044E8580D9CF}\0.9.61.0\GH_IO.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Grasshopper, Version=1.0.0.20, Culture=neutral, PublicKeyToken=dda4f5ec2cd80803, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\AppData\Roaming\McNeel\Rhinoceros\5.0\Plug-ins\Grasshopper {B45A29B1-4343-4035-989E-044E8580D9CF}\0.9.61.0\Grasshopper.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RhinoCommon">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Rhinoceros 5.0\System\RhinoCommon.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Generic\EM_Plug.cs" />
+    <Compile Include="Generic\EM_Default.cs" />
+    <Compile Include="Generic\EmbryoInfo.cs" />
+    <Compile Include="Generic\EM_Slider.cs" />
+    <Compile Include="Generic\EM_Settings.cs" />
+    <Compile Include="Generic\EM_Component.cs" />
+    <Compile Include="Graph\ColumnStep.cs" />
+    <None Include="Graph\EmbryoFix2.cs" />
+    <None Include="Graph\EmbryoFix.cs" />
+    <Compile Include="Graph\EmbryoSettings.cs" />
+    <Compile Include="Graph\EmbryoAbout.cs" />
+    <Compile Include="Params\EM_InputParam.cs" />
+    <Compile Include="Types\EM_Input.cs" />
+    <Compile Include="Types\EM_Goo.cs" />
+    <Compile Include="Params\EM_SettingsParam.cs" />
+    <Compile Include="Topology\OutputList.cs" />
+    <Compile Include="Topology\Topology.cs" />
+    <Compile Include="Generic\TypeCheck2.cs" />
+    <Compile Include="Generic\Friends.cs" />
+    <None Include="Generic\SunPosition.cs" />
+    <Compile Include="Graph\ComponentStep.cs" />
+    <None Include="Graph\SortGraph.cs" />
+    <Compile Include="Graph\EmbryoMainAttrib.cs" />
+    <Compile Include="Graph\EmbryoMain.cs" />
+    <Compile Include="Utilities\ChildOutputPlugAttrib.cs" />
+    <Compile Include="Utilities\Counter.cs" />
+    <Compile Include="Utilities\BrepArea.cs" />
+    <Compile Include="Utilities\UnRoll.cs" />
+    <Compile Include="Utilities\GetGeometryAttrib.cs" />
+    <None Include="Visulise\Kohonen.cs" />
+    <None Include="Visulise\Neuron.cs" />
+    <Compile Include="Visulise\ImageFromPath.cs" />
+    <Compile Include="Visulise\ImageFromPathAttrib.cs" />
+    <Compile Include="Visulise\ScatterPlotAttrib.cs" />
+    <Compile Include="Visulise\ScatterPlot.cs" />
+    <Compile Include="Visulise\SpiderGraphAttrib.cs" />
+    <Compile Include="Visulise\SpiderGraph.cs" />
+    <Compile Include="Utilities\ChildOutputPlug.cs" />
+    <Compile Include="Forms\EmbryoControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EmbryoControl.Designer.cs">
+      <DependentUpon>EmbryoControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generic\TypeCheck.cs" />
+    <Compile Include="Generic\StringTool.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\ParentOutput.cs" />
+    <Compile Include="Utilities\ParentOutputAttrib.cs" />
+    <Compile Include="Utilities\ParentInput.cs" />
+    <Compile Include="Utilities\ParentInputAttrib.cs" />
+    <Compile Include="Utilities\GetGeometry.cs" />
+    <None Include="Temp\SpecialIntegerAttributes.cs" />
+    <None Include="Temp\SpecialIntegerObject.cs" />
+    <Compile Include="Utilities\TypeRevealer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\EmbryoControl.resx">
+      <DependentUpon>EmbryoControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\E4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\E6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\E7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WillingInput01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WillingOutput01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GetGeometry01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GetGeometry02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Switchboard01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TypeRevealer01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\C1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\P1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\T2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dummy01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OutputPlane.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OutputPoint.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OutputNumber.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ChildOutput01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ChildInput01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\P2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ChildInput02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ChildOutput02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RemixDAG01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spider Chart 01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Scatter01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Scatter02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Scatter03.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StepThrough01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StepThrough02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Settings01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Switchboard02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UnRoll01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Area01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SettingsParam01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GetGeometry03.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GetGeometry04.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GetGeometry05.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GetGeometry06.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColumnStep.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ComponentStep.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UnRoll02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GetGeometry07.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GetGeometry08.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Scatter04.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer03.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ImageFromPath01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\About.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EmbryoMain01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EmbryoMain02.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>Copy "$(TargetPath)" "C:\Users\jhard\AppData\Roaming\Grasshopper\Libraries\Embryo.gha"</PostBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+</Project>

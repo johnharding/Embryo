@@ -1,11 +1,13 @@
 Embryo
 ======
 
-It's a Grasshopper plugin
+Introduction
+------------
+The Embryo project aims to apply genetic programming concepts to grasshopper, offering an alternative to manual visual graph development.
 
 
 License
-======
+-------
 
 The MIT License (MIT)
 

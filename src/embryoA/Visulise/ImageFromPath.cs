@@ -18,7 +18,7 @@ namespace Embryo.Visulise
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddTextParameter("P", "P", "File Path", GH_ParamAccess.item);
+            pManager.AddTextParameter("P", "P", "File Path", GH_ParamAccess.item, "Path");
             pManager.AddNumberParameter("S", "S", "Scale Factor", GH_ParamAccess.item, 1.0);
         }
 
@@ -30,12 +30,6 @@ namespace Embryo.Visulise
         //SolveInstance is a method in the GH_Component class
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            //double myFloat = 0.0;
-            //double myFloat2 = 0.0;
-            //int myInt = 1;
-            //if (!DA.GetData(0, ref myFloat)) { return; }
-            //if (!DA.GetData(1, ref myFloat2)) { return; }
-            //DA.GetData(2, ref myInt);
         }
 
         public override Guid ComponentGuid

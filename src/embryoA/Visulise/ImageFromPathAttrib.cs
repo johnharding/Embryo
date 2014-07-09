@@ -25,8 +25,6 @@ namespace Embryo.Visulise
         
         protected override void Layout()
         {
-            //Lock this object to the pixel grid. 
-            //I.e., do not allow it to be position in between pixels.
             Pivot = GH_Convert.ToPoint(Pivot);
             Bounds = new RectangleF(Pivot, new SizeF(500, 500));
             RectangleF myRect = new RectangleF(Bounds.Location, new SizeF(100f, 60f));
@@ -47,21 +45,8 @@ namespace Embryo.Visulise
 
             if (channel == GH_CanvasChannel.Objects)
             {
-                GH_Structure<GH_String> myData1;
-                GH_Structure<GH_Number> myData2;
-
-                //if (!Owner.Params.Input[0].VolatileData.IsEmpty)
-                //{
-                    myData1 = (GH_Structure<GH_String>)Owner.Params.Input[0].VolatileData;
-                //}
-                //else
-                //{
-                       // myData1 = new GH_Structure<GH_String>();
-                        //myData1.Insert(new GH_String("fish"), new GH_Path(0), 0);
-                //}
-
-                
-                myData2 = (GH_Structure<GH_Number>)Owner.Params.Input[1].VolatileData;
+                GH_Structure<GH_String> myData1 = (GH_Structure<GH_String>)Owner.Params.Input[0].VolatileData;
+                GH_Structure<GH_Number> myData2 = (GH_Structure<GH_Number>)Owner.Params.Input[1].VolatileData;
 
                 // Get the size to begin with
                 Layout();
@@ -109,11 +94,9 @@ namespace Embryo.Visulise
 
                 if (!myData1.IsEmpty)
                 {
-                    //myPath = myData1.get_DataItem(0).Value;
                     Bitmap myBitmap;
                     try
                     {
-                        //myBitmap = new Bitmap(myPath);
                         myBitmap = new Bitmap(myData1.get_DataItem(0).Value);
                     }
                     catch

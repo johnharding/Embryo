@@ -18,7 +18,7 @@ namespace Embryo.Visulise
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddTextParameter("P", "P", "File Path", GH_ParamAccess.item, "Path");
+            pManager.AddTextParameter("P", "P", "File Path", GH_ParamAccess.item);
             pManager.AddNumberParameter("S", "S", "Scale Factor", GH_ParamAccess.item, 1.0);
         }
 

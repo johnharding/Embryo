@@ -12,7 +12,7 @@ namespace Embryo.Visulise
     {
 
         public ImageFromPath()
-            : base("ImageFromPath", "Image", "Displays an image from a path string", "Embryo", "Visulise")
+            : base("ImageFromPath", "Image", "Displays an image at a given location", "Embryo", "Visulise")
         {
         }
 
@@ -30,12 +30,13 @@ namespace Embryo.Visulise
         //SolveInstance is a method in the GH_Component class
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+
         }
 
         public override Guid ComponentGuid
         {
             //generated at http://www.newguid.com/
-            get { return new Guid("b827f677-1542-4360-b66c-5e7fa9885181"); }
+            get { return new Guid("28061cd4-df7e-4109-9f98-5046fcd6be20"); }
         }
 
         public override void CreateAttributes()

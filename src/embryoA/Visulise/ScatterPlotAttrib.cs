@@ -24,19 +24,15 @@ namespace Embryo.Visulise
         // Out of my depth here...
         protected override void Layout()
         {
-        //    //Lock this object to the pixel grid. 
-        //    //I.e., do not allow it to be position in between pixels.
-        //    Pivot = GH_Convert.ToPoint(Pivot);
-            
+            Pivot = GH_Convert.ToPoint(Pivot);
             Bounds = new RectangleF(Pivot, new SizeF(540, 500));
             RectangleF myRect = new RectangleF(Bounds.Location, new SizeF(100f, 60f));
             myRect.X += 16;
             myRect.Y += 4;
             LayoutInputParams(Owner, myRect);
-
         }
 
-
+        
         protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel)
         {
             if (channel == GH_CanvasChannel.Wires)
@@ -44,14 +40,14 @@ namespace Embryo.Visulise
                 base.Render(canvas, graphics, channel);
                 Layout();
             }
-
+            
             if (channel == GH_CanvasChannel.Objects)
             {
 
                 GH_Structure<GH_Number> dupData1 = (GH_Structure<GH_Number>)Owner.Params.Input[0].VolatileData;
                 GH_Structure<GH_Number> dupData2 = (GH_Structure<GH_Number>)Owner.Params.Input[1].VolatileData;
                 GH_Structure<GH_Integer> dupData3 = (GH_Structure<GH_Integer>)Owner.Params.Input[2].VolatileData;
-
+   
                 Pen pen;
                 SolidBrush myBrush;
 
@@ -70,10 +66,7 @@ namespace Embryo.Visulise
                 graphics.FillEllipse(myBrush, Bounds.Location.X - 4 - 1, Bounds.Location.Y + 14 - 4, 8, 8);
                 graphics.FillEllipse(myBrush, Bounds.Location.X - 4 - 1, Bounds.Location.Y + 34 - 4, 8, 8);
                 graphics.FillEllipse(myBrush, Bounds.Location.X - 4 - 1, Bounds.Location.Y + 54 - 4, 8, 8);
-
                 graphics.DrawRectangle(pen, Rectangle.Round(Bounds));
-
-                
 
                 // Setup default font
                 Font ubuntuFont = new Font("ubuntu", 8);
@@ -127,7 +120,7 @@ namespace Embryo.Visulise
                         // Now draw the points
                         for (int i = 0; i < dupData1.DataCount; i++)
                         {
-                            int X =  (int)(dupData1.get_DataItem(i).Value*mulX) + (int)Bounds.Location.X + 60 + 20;
+                            int X =  (int)(dupData1.get_DataItem(i).Value * mulX) + (int)Bounds.Location.X + 60 + 20;
                             int Y = -(int)(dupData2.get_DataItem(i).Value * mulY) + (int)Bounds.Location.Y + 470 - 10;
 
                             myPoints.Add(new Point(X, Y));

@@ -13,14 +13,14 @@ namespace Embryo.Visulise
     {
         
         public SpiderGraph()
-            : base("Spider Chart", "Spider", "Draws an n-legged spider of (normalised) data", "Embryo", "Visulise")
+            : base("SpiderChart", "Spider", "Draws an n-legged spider of (normalised) data", "Embryo", "Visulise")
         {
         }
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddNumberParameter("D", "D", "Input number list", GH_ParamAccess.item);
-            pManager.AddTextParameter("L", "L", "Optional legend (string list)", GH_ParamAccess.item);
+            pManager.AddNumberParameter("D", "D", "Input number list", GH_ParamAccess.list);
+            pManager.AddTextParameter("L", "L", "Optional legend (string list)", GH_ParamAccess.list);
             pManager.AddNumberParameter("W", "W", "Optional importance weightings (number list)", GH_ParamAccess.list);
 
             Params.Input[1].Optional = true;
@@ -35,20 +35,12 @@ namespace Embryo.Visulise
         //SolveInstance is a method in the GH_Component class
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            //double myFloat = 0.0;
-            //string myString = "";
-            //List<double> myFloat2 = new List<double>();
-
-            //if (!DA.GetData(0, ref myFloat)) { return; }
-            //if (!DA.GetData(1, ref myString)) { return; }
-            //DA.GetDataList(2, myFloat2);
-
         }
 
         public override Guid ComponentGuid
         {
             //generated at http://www.newguid.com/
-            get { return new Guid("20dc2f27-e90d-4071-83ed-dd918de48621"); }
+            get { return new Guid("b61fcf9c-9ae6-421c-a598-926715ccba18"); }
         }
 
         public override void CreateAttributes()

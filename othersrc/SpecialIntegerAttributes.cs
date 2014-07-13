@@ -27,22 +27,22 @@ namespace Embryo.Utilities
                 GH_CapsuleRenderEngine.RenderOutputGrip(graphics, canvas.Viewport.Zoom, OutputGrip, true);
 
                 //Render capsules.
-                //for (int col = 0; col < 4; col++)
-                //{
-                    //for (int row = 0; row < 4; row++)
-                    //{
-                        //int value = Value(col, row);
-                        //Rectangle button = Button(col, row);
+                for (int col = 0; col < 4; col++)
+                {
+                    for (int row = 0; row < 4; row++)
+                    {
+                        int value = Value(col, row);
+                        Rectangle button = Button(col, row);
 
-                        //GH_Palette palette = GH_Palette.Pink;
-                        //if (value == Owner.Value)
-                        //   palette = GH_Palette.Black;
-
-                        //GH_Capsule capsule = GH_Capsule.CreateTextCapsule(button, button, palette, value.ToString(), 0, 0);
-                        //capsule.Render(graphics, Selected, Owner.Locked, false);
-                        //capsule.Dispose();
-                    //}
-                //}
+                        GH_Palette palette = GH_Palette.Pink;
+                        if (value == Owner.Value)
+                            palette = GH_Palette.Black;
+                       
+                        GH_Capsule capsule = GH_Capsule.CreateTextCapsule(button, button, palette, value.ToString(), 0, 0);
+                        capsule.Render(graphics, Selected, Owner.Locked, false);
+                        capsule.Dispose();
+                    }
+                }
             }
         }
     }

@@ -33,7 +33,7 @@ namespace Embryo.Visulise
             LayoutInputParams(Owner, myRect);
         }
 
-
+        
         protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel)
         {
 
@@ -50,7 +50,7 @@ namespace Embryo.Visulise
 
                 // Get the size to begin with
                 Layout();
-
+               
                 float scaler;
                 try
                 {
@@ -102,27 +102,29 @@ namespace Embryo.Visulise
                     catch
                     {
                         Owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Path must be a valid location");
-                        graphics.FillRectangle(myBrush, Rectangle.Round(Bounds));
-                        graphics.DrawRectangle(pen, Rectangle.Round(Bounds));
-                        graphics.DrawString("johnharding@fastmail.fm", ubuntuFont, Brushes.White, new Point((int)this.Bounds.Location.X + 12, (int)this.Bounds.Location.Y + 480 - 6 - 10), myFormat);
-                        graphics.DrawImage(Owner.Icon_24x24, Bounds.Location.X + 12, Bounds.Location.Y + 450 - 10); 
+                        displayComponent(graphics, myBrush, ubuntuFont, pen, myFormat); 
                         return;
                     }
 
+                    // If we've got an image then draw it
                     Bounds = new RectangleF(Pivot, new SizeF(myBitmap.Size.Width * scaler, myBitmap.Size.Height *scaler));
                     graphics.DrawImage(myBitmap, Bounds);
                 }
                 else
                 {
-
-                    graphics.FillRectangle(myBrush, Rectangle.Round(Bounds));
-                    graphics.DrawRectangle(pen, Rectangle.Round(Bounds));
-                    graphics.DrawString("johnharding@fastmail.fm", ubuntuFont, Brushes.White, new Point((int)this.Bounds.Location.X + 12, (int)this.Bounds.Location.Y + 480 - 6 - 10), myFormat);
-                    graphics.DrawImage(Owner.Icon_24x24, Bounds.Location.X + 12, Bounds.Location.Y + 450 - 10); 
+                    displayComponent(graphics, myBrush, ubuntuFont, pen, myFormat);
                 }
 
                 myFormat.Dispose();
             }
+        }
+
+        void displayComponent(Graphics graphics, Brush myBrush, Font ubuntuFont, Pen pen, StringFormat myFormat)
+        {
+            graphics.FillRectangle(myBrush, Rectangle.Round(Bounds));
+            graphics.DrawRectangle(pen, Rectangle.Round(Bounds));
+            graphics.DrawString("johnharding@fastmail.fm", ubuntuFont, Brushes.White, new Point((int)this.Bounds.Location.X + 12, (int)this.Bounds.Location.Y + 480 - 6 - 10), myFormat);
+            graphics.DrawImage(Owner.Icon_24x24, Bounds.Location.X + 12, Bounds.Location.Y + 450 - 10);
         }
 
     }

@@ -8,10 +8,10 @@ using Rhino.Geometry;
 
 namespace Embryo.Utilities
 {
-    public class BrepArea : GH_Component
+    public class BrepVolume : GH_Component
     {
-        public BrepArea()
-            : base("FastBrepArea", "FastBrepArea", "Finds the area of a Brep without calculating the centroid (for speed). Use at own risk!", "Embryo", "Utilities")
+        public BrepVolume()
+            : base("FastBrepVolume", "FastBrepVolume", "Finds the volume of a Brep without the centroid (for speed). Use at own risk!", "Embryo", "Utilities")
         {
         }
 
@@ -24,7 +24,7 @@ namespace Embryo.Utilities
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddNumberParameter("Area", "Ar", "Brep surface area", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Volume", "Vo", "Brep volume", GH_ParamAccess.item);
         }
 
         //SolveInstance is a method in the GH_Component class
@@ -32,7 +32,7 @@ namespace Embryo.Utilities
         {
             Brep mySurface = null;
             if (!DA.GetData(0, ref mySurface)){ return; }
-            DA.SetData(0, mySurface.GetArea());
+            DA.SetData(0, mySurface.GetVolume());
 
         }
 

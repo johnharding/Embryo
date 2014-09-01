@@ -38,8 +38,7 @@ namespace Embryo.Utilities
 
         public override Guid ComponentGuid
         {
-            //generated at http://www.newguid.com/
-            get { return new Guid("afea578b-ec79-499c-8a3e-890cf6e983a4"); }
+            get { return new Guid("B1C0B989-8139-47C8-9F58-FE8931DE1862"); }
         }
 
 

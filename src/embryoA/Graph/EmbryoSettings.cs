@@ -34,10 +34,10 @@ namespace Embryo.Graph
         {
             pm.AddBooleanParameter("Preview", "Pr", "Preview the components in the generated graph",GH_ParamAccess.item, true);
             pm.AddIntervalParameter("Slider Domain", "SD", "Numeric domain for generated sliders", GH_ParamAccess.item, new Rhino.Geometry.Interval(-10.0, 10.0));
-            pm.AddBooleanParameter("One-to-One", "OO", "If true, each component output can only be used once", GH_ParamAccess.item, false);
+            pm.AddBooleanParameter("One-to-One", "OO", "If true, each component output can only be used once", GH_ParamAccess.item, true);
             pm.AddIntegerParameter("GridX", "GX", "Component spacing in the X direction (column spacing)", GH_ParamAccess.item, 120);
             pm.AddIntegerParameter("GridY", "GY", "Component spacing in the Y direction (row spacing)", GH_ParamAccess.item, 120);
-            pm.AddBooleanParameter("Remove dead", "RD", "Removes components that have warnings or errors", GH_ParamAccess.item, false);
+            pm.AddBooleanParameter("Remove dead", "RD", "Removes components that have warnings or errors", GH_ParamAccess.item, true);
             pm.AddBooleanParameter("Only Terminals", "OT", "Previews only terminal components (i.e. with no children)", GH_ParamAccess.item, false);
         }
 

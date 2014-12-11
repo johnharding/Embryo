@@ -25,12 +25,12 @@ namespace Embryo.Generic
             GH_Convert.ToGHInterval(new Rhino.Geometry.Interval(-10.0, 10.0), GH_Conversion.Primary, ref tempInterval);
             Interval = tempInterval;
 
-            OneToOne = false;
+            OneToOne = true;
             MaxRowNo = 16;
             GridX = 120;
             GridY = 100;
 
-            RemoveDead = false;
+            RemoveDead = true;
             OnlyTerms = false;
 
             ExpireSolution = false;

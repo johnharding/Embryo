@@ -51,7 +51,7 @@ namespace Embryo.Graph
         // List of outputs on the parent graph that are to be included
         List<object> willingOutput;
 
-        
+ 
         
         // Create a dictionary that stores all of the component IDs to be used from the ingredient pool
         Dictionary<int, string> componentGUIDs;
@@ -166,7 +166,7 @@ namespace Embryo.Graph
             int crazySeed = -1;
             DA.GetData("Random Overide", ref crazySeed);
             
-            // Let the craziness begin!!
+            // random override
             if (crazySeed > 0)
             {
                 metricSeed = new List<double>();
@@ -242,10 +242,11 @@ namespace Embryo.Graph
 
                 // Check for Embryo Components on the canvas
                 for (int i = 0; i < canvasObject.Count; i++)
-                {
-                    // 1. Parent Outputs
+                {              
                     string george = canvasObject[i].ComponentGuid.ToString();
-                    if (george == "cccb5126-3224-41ec-8841-9e0d1603af8e") // Parent output tag
+
+                    // 1. Parent Outputs
+                    if (george == "cccb5126-3224-41ec-8841-9e0d1603af8e")
                     {
                         // Search through all again
                         for (int j = 0; j < canvasObject.Count; j++)
@@ -511,10 +512,11 @@ namespace Embryo.Graph
 
             #region 6. Hook up the components one by one
             
-            // A list to avoid an input going to the same input twice
+            // A local list to avoid going to the same output twice
+            // This is different to the one-to-one list which is global
             List<object> stashRecord = new List<object>();
 
-            // We will find some inputs from somewhere in the graph, including the sliders
+            // We will find some possible inputs from somewhere in the graph, including the sliders
             for (int i = 0; i < myComponents.Count; i++)
             {
                 // Clear the list of stash members already visited
@@ -633,16 +635,17 @@ namespace Embryo.Graph
             // Set cartesian2d
             int maxCol = Friends.GetMaxCol(myComponents);
             int[] cartesian2d = new int[maxCol + 1];
-            for (int i = 0; i < cartesian2d.Length; i++) cartesian2d[i] = 0;
+            for (int i = 0; i < cartesian2d.Length; i++) 
+                cartesian2d[i] = 0;
 
             for (int i = 0; i < myComponents.Count; i++)
             {
-                //if (myComponents[i].Alive)
-                //{
+                if (!mySettings.RemoveDead || myComponents[i].Alive)
+                {
                     int activeCol = myComponents[i].GetColumn();
                     myComponents[i].Component.Attributes.Pivot = new PointF(activeCol * mySettings.GridX + 800, -mySettings.GridY * cartesian2d[activeCol] - 100);
                     cartesian2d[activeCol]++;
-                //}
+                }
                     // Set preview to false if it has no children.
                     // Easier to do it here
      
@@ -794,7 +797,7 @@ namespace Embryo.Graph
                     }
                 }
 
-                // If there are no valid inputs, then flag and  give up
+                // If there are no valid inputs, then flag and give up
                 if(validStash.Count==0)
                 {
                     if (thisComponent != null) thisComponent.Component.Message += "X";
@@ -811,14 +814,23 @@ namespace Embryo.Graph
                     if (TypeCheck.sliderValid(myType, yourType) && !stashRecord.Contains(validStash[index]))
                     {
                         thisInput.AddSource((Grasshopper.Kernel.Special.GH_NumberSlider)validStash[index]);
-                        //if (isCountdown) outputStash.RemoveAt(s);
-                        stashRecord.Add(validStash[index]); // Prevent two of the same sources for this component
+
+                        // Remove from the outputStash list if one-to-one
+                        if (isCountdown) 
+                            outputStash.RemoveAt(index);
+
+                        // Prevent two of the same sources for this component. This is not dependent on the one-to-one component
+                        stashRecord.Add(validStash[index]); 
                     }
 
                     // Component?
                     else if (TypeCheck.isValid(myType, yourType) && !stashRecord.Contains(validStash[index]))
                     {
                         thisInput.AddSource((IGH_Param)validStash[index]);
+
+                        // Remove from the outputStash list if one-to-one
+                        if (isCountdown)
+                            outputStash.RemoveAt(index);
 
                         // There HAS GOT TO BE a better way of doing this than this...
                         // This is for layout purporses.
@@ -842,8 +854,8 @@ namespace Embryo.Graph
                             }
                         }
 
-                        //if (isCountdown) outputStash.RemoveAt(s);
-                        stashRecord.Add(validStash[index]); // Prevent two of the same sources for this component
+                        // Prevent two of the same sources for this component. This is not dependent on the one-to-one component
+                        stashRecord.Add(validStash[index]); 
                     }
                 }
             }

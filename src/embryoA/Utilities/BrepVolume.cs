@@ -46,7 +46,7 @@ namespace Embryo.Utilities
         {
             get
             {
-                return Properties.Resources.Area01;
+                return Properties.Resources.Volume01;
             }
         }
 

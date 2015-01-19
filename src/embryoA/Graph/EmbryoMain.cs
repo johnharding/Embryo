@@ -781,6 +781,7 @@ namespace Embryo.Graph
                 int index;
                 
                 // We need to form a sublist of valid connections
+                // why?
                 List<object> validStash = new List<object>();
                 myType = thisInput.GetType().ToString();
                 
@@ -815,12 +816,16 @@ namespace Embryo.Graph
                     {
                         thisInput.AddSource((Grasshopper.Kernel.Special.GH_NumberSlider)validStash[index]);
 
-                        // Remove from the outputStash list if one-to-one
-                        if (isCountdown) 
-                            outputStash.RemoveAt(index);
-
+                        
                         // Prevent two of the same sources for this component. This is not dependent on the one-to-one component
-                        stashRecord.Add(validStash[index]); 
+                        stashRecord.Add(validStash[index]);
+
+                        // Remove from the outputStash list if one-to-one
+                        if (isCountdown)
+                        {
+                            outputStash.Remove(validStash[index]);
+                            validStash.RemoveAt(index);
+                        }
                     }
 
                     // Component?
@@ -828,9 +833,6 @@ namespace Embryo.Graph
                     {
                         thisInput.AddSource((IGH_Param)validStash[index]);
 
-                        // Remove from the outputStash list if one-to-one
-                        if (isCountdown)
-                            outputStash.RemoveAt(index);
 
                         // There HAS GOT TO BE a better way of doing this than this...
                         // This is for layout purporses.
@@ -855,7 +857,14 @@ namespace Embryo.Graph
                         }
 
                         // Prevent two of the same sources for this component. This is not dependent on the one-to-one component
-                        stashRecord.Add(validStash[index]); 
+                        stashRecord.Add(validStash[index]);
+
+                        // Remove from the outputStash list if one-to-one
+                        if (isCountdown)
+                        {
+                            outputStash.Remove(validStash[index]);
+                            validStash.RemoveAt(index);
+                        }
                     }
                 }
             }

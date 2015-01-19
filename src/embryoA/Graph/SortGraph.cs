@@ -39,6 +39,7 @@ namespace Embryo.Graph
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pm)
         {
             pm.AddGenericParameter("Components", "Co", "A list of the generated components", GH_ParamAccess.list);
+            pm.AddIntegerParameter("meh", "meh", "meh", GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -76,6 +77,10 @@ namespace Embryo.Graph
                 canvas.Document.SolutionEnd += new GH_Document.SolutionEndEventHandler(TopSort);
             }
 
+            DA.SetDataList(0, existingComponents);
+            DA.SetData(1, existingComponents.Count);
+
+
         }
 
 
@@ -89,13 +94,17 @@ namespace Embryo.Graph
             {
                 string george = canvasObject[i].ComponentGuid.ToString();
 
-                try
+                // If we're not the mother component
+                if (!george.Equals("85e917ed-7467-4e07-b14c-c6b95f9bc63c"))
                 {
-                    EM_Component eComponent = new EM_Component((GH_Component)canvasObject[i], true);
-                    existingComponents.Add(eComponent);
-                }
-                catch
-                {
+                    try
+                    {
+                        EM_Component eComponent = new EM_Component((GH_Component)canvasObject[i], true);
+                        existingComponents.Add(eComponent);
+                    }
+                    catch
+                    {
+                    }
                 }
             }
 
@@ -110,9 +119,27 @@ namespace Embryo.Graph
 
             }
 
+
+            for (int i = 0; i < existingComponents.Count; i++)
+            {
+                existingComponents[i].Component.ExpireSolution(false);
+            }
+
+
+            this.ExpireSolution(false);
+
+            // Compute all objects downstream of this component (such as cognise ones)
+            List<IGH_ActiveObject> myList2 = OnPingDocument().FindAllDownstreamObjects(this);
+            foreach (IGH_ActiveObject myObject in myList2)
+            {
+                myObject.ClearData();
+                myObject.CollectData();
+                myObject.ComputeData();
+            }    
+
         }
 
-
+    
 
         public override Guid ComponentGuid
         {

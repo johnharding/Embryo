@@ -91,7 +91,7 @@
     <Compile Include="Params\EM_SettingsParam.cs" />
     <Compile Include="Topology\OutputList.cs" />
     <Compile Include="Topology\Topology.cs" />
-    <Compile Include="Generic\TypeCheck2.cs" />
+    <None Include="Generic\TypeCheck2.cs" />
     <Compile Include="Generic\Friends.cs" />
     <Compile Include="Graph\ComponentStep.cs" />
     <Compile Include="Graph\SortGraph.cs" />

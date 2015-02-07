@@ -9,8 +9,7 @@ namespace Embryo.Generic
     {
             /// <summary>
             /// Checks the type
-            /// </summary>
-            
+            /// </summary>     
             public static bool isValid(string myType, string yourType)
             {
                 bool myBool = false;
@@ -125,6 +124,12 @@ namespace Embryo.Generic
                         // 25.Plane
 
                         // 26.Point
+                        case "Grasshopper.Kernel.Parameters.Param_Point":
+                            if (yourType == "Grasshopper.Kernel.Parameters.Param_Plane")
+                            {
+                                myBool = true;
+                            }
+                            break;
                         
                         // 27.Rectangle
                         
@@ -141,12 +146,6 @@ namespace Embryo.Generic
                         // 33.Transform
 
                         // 34.Vector
-                        case "Grasshopper.Kernel.Parameters.Param_Vector":
-                            if (yourType == "Grasshopper.Kernel.Parameters.Param_Point")
-                            {
-                                myBool = true;
-                            }
-                            break;
 
                         // 35.SquishyXMorphs.GH_TwistedBox
                         

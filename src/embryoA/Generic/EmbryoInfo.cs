@@ -22,7 +22,7 @@ namespace Embryo.Generic
         public override string Version
         {
             //post-embryoviz release
-            get { return "0.2.1"; }
+            get { return "0.4.0"; }
         }
         public override Guid Id
         {

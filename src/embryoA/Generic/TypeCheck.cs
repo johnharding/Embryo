@@ -122,6 +122,12 @@ namespace Embryo.Generic
                         // 24.Path
 
                         // 25.Plane
+                        case "Grasshopper.Kernel.Parameters.Param_Plane":
+                            if (yourType == "Grasshopper.Kernel.Parameters.Param_Point")
+                            {
+                                myBool = true;
+                            }
+                            break;
 
                         // 26.Point
                         case "Grasshopper.Kernel.Parameters.Param_Point":

@@ -52,12 +52,14 @@
   <ItemGroup>
     <Reference Include="GH_IO">
       <HintPath>..\..\..\..\..\AppData\Roaming\McNeel\Rhinoceros\5.0\Plug-ins\Grasshopper (b45a29b1-4343-4035-989e-044e8580d9cf)\0.9.76.0\GH_IO.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Grasshopper">
       <HintPath>..\..\..\..\..\AppData\Roaming\McNeel\Rhinoceros\5.0\Plug-ins\Grasshopper (b45a29b1-4343-4035-989e-044e8580d9cf)\0.9.76.0\Grasshopper.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="RhinoCommon">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Rhinoceros 5.0\System\RhinoCommon.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Rhinoceros 5 (64-bit)\System\RhinoCommon.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -83,6 +85,7 @@
     <Compile Include="Generic\EM_Settings.cs" />
     <Compile Include="Generic\EM_Component.cs" />
     <Compile Include="Graph\ColumnStep.cs" />
+    <Compile Include="Graph\EmbryoInfo.cs" />
     <Compile Include="Graph\EmbryoSettings.cs" />
     <Compile Include="Graph\EmbryoAbout.cs" />
     <Compile Include="Params\EM_InputParam.cs" />

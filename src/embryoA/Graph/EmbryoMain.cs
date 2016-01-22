@@ -103,27 +103,27 @@ namespace Embryo.Graph
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pm)
         {
-            pm.AddBooleanParameter("Reset", "Go", "Begins a new Embryo solution", GH_ParamAccess.item);
-            pm.AddIntegerParameter("Sliders", "Sl", "The number of generated sliders in the new graph", GH_ParamAccess.item, 8);
-            pm.AddIntegerParameter("Components", "Co", "The number of generated components in the new graph", GH_ParamAccess.item, 16);
-            pm.AddNumberParameter("Metric Genes", "RM", "A list of genes that generate metric parameters", GH_ParamAccess.list, 2);
-            pm.AddIntegerParameter("Topology Genes", "RT", "A list of genes that generate the topological structure", GH_ParamAccess.list, 2);
-            pm.AddIntegerParameter("Function Genes", "RF", "A list of genes that select components", GH_ParamAccess.list, 2);
+            pm.AddBooleanParameter("Reset", "Reset", "Resets the Embryo solution", GH_ParamAccess.item);
+            pm.AddIntegerParameter("Sliders", "Sliders", "The number of generated sliders in the new graph", GH_ParamAccess.item, 8);
+            pm.AddIntegerParameter("Components", "Components", "The number of generated components in the new graph", GH_ParamAccess.item, 16);
+            pm.AddNumberParameter("MetricGenes", "MetricGenes", "A list of genes that generate metric parameters", GH_ParamAccess.list, 2);
+            pm.AddIntegerParameter("TopologyGenes", "TopologyGenes", "A list of genes that generate the topological structure", GH_ParamAccess.list, 2);
+            pm.AddIntegerParameter("FunctionGenes", "FunctionGenes", "A list of genes that select components", GH_ParamAccess.list, 2);
 
             // Register the default settings for Embryo
             myParam = new EM_SettingsParam();
             localSettings = new EM_Settings();
             myParam.PersistentData.Append(new EM_Goo(localSettings));
-            pm.AddParameter(myParam, "Settings", "Se", "Embryo Settings", GH_ParamAccess.item);
+            pm.AddParameter(myParam, "Settings", "Settings", "Embryo Settings", GH_ParamAccess.item);
 
             // The random override negates the need for 3 seeds and explores the whole solution space
-            pm.AddIntegerParameter("Random Overide", "RO", "0 is default Embryo mapping behaviour. Anything positive will overide the genes and produce a random graph using this input as a seed", GH_ParamAccess.item, 0);
+            pm.AddIntegerParameter("RandomOveride", "RandomOveride", "0 is default Embryo mapping behaviour. Anything positive will overide the genes and produce a random graph using this input as a seed", GH_ParamAccess.item, 0);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pm)
         {
-            pm.AddIntegerParameter("Iterations", "It", "Number of iterations for this Embryo solution", GH_ParamAccess.item);
-            pm.AddGenericParameter("Components", "Co", "A list of the generated components", GH_ParamAccess.list);
+            pm.AddIntegerParameter("Iterations", "Iterations", "Number of iterations for this Embryo solution", GH_ParamAccess.item);
+            pm.AddGenericParameter("Components", "Components", "A list of the generated components", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -143,15 +143,15 @@ namespace Embryo.Graph
 
             // Metric genes
             metricSeed = new List<double>();
-            DA.GetDataList<double>("Metric Genes", metricSeed);
+            DA.GetDataList<double>("MetricGenes", metricSeed);
             
             // Topology genes
             topoloSeed = new List<int>();
-            DA.GetDataList<int>("Topology Genes", topoloSeed);
+            DA.GetDataList<int>("TopologyGenes", topoloSeed);
 
             // Funcion genes
             functiSeed = new List<int>();
-            DA.GetDataList<int>("Function Genes", functiSeed);
+            DA.GetDataList<int>("FunctionGenes", functiSeed);
 
             // Sliders to be generated
             DA.GetData("Sliders", ref sCount);
@@ -164,7 +164,7 @@ namespace Embryo.Graph
             if (!DA.GetData("Reset", ref myData)) { return; }
 
             int crazySeed = -1;
-            DA.GetData("Random Overide", ref crazySeed);
+            DA.GetData("RandomOveride", ref crazySeed);
             
             // random override
             if (crazySeed > 0)
@@ -186,7 +186,7 @@ namespace Embryo.Graph
             }
 
             // Set up an event so that everything happens after Grasshopper expires the whole solution
-            if (myData == false)
+            if (!myData)
             {
                 try
                 {

@@ -80,7 +80,6 @@
   <ItemGroup>
     <Compile Include="Generic\EM_Default.cs" />
     <Compile Include="Generic\EM_Plug.cs" />
-    <Compile Include="Generic\EmbryoInfo.cs" />
     <Compile Include="Generic\EM_Slider.cs" />
     <Compile Include="Generic\EM_Settings.cs" />
     <Compile Include="Generic\EM_Component.cs" />

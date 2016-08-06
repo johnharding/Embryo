@@ -805,6 +805,7 @@ namespace Embryo.Graph
                 }
 
                 else{
+                    // Now select an outout from the valid stash.
                     // 4 Inputs default
                     if (KK < 4) index = topoloSeed[(II * 4 + KK) % topoloSeed.Count] % validStash.Count;
                     else index = randomMonkey.Next(validStash.Count); // The only random part in Embryo now. NOT now used by parent inputs
@@ -876,10 +877,10 @@ namespace Embryo.Graph
             get { return new Guid("965d8426-5a7d-4fe2-b886-583044f9884e"); }
         }
 
-        //public override void CreateAttributes()
-        //{
-            //m_attributes = new EmbryoMainAttrib(this);
-        //}
+        public override void CreateAttributes()
+        {
+            m_attributes = new EmbryoMainAttrib(this);
+        }
 
         public override GH_Exposure Exposure
         {
@@ -895,6 +896,26 @@ namespace Embryo.Graph
             {
                 return Properties.Resources.EmbryoMain02;
             }
+        }
+
+
+
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            Menu_AppendItem(menu, @"github source", gotoGithub);
+            Menu_AppendItem(menu, @"gh group page", gotoGrasshopperGroup);
+            
+        }
+
+        private void gotoGithub(Object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(@"https://github.com/johnharding/Embryo");
+        }
+
+        private void gotoGrasshopperGroup(Object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(@"http://www.grasshopper3d.com/group/embryo");
         }
 
     }

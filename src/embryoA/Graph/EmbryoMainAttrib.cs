@@ -6,6 +6,7 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel.Attributes;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Embryo.Graph
 {
@@ -16,6 +17,8 @@ namespace Embryo.Graph
             : base(owner)
         {
         }
+        
+       
 
         protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel)
         {
@@ -27,7 +30,7 @@ namespace Embryo.Graph
             if (channel == GH_CanvasChannel.Objects)
             {
                 // 1. Component Render
-                //base.Render(canvas, graphics, channel);
+                base.Render(canvas, graphics, channel);
 
                 // 2. Canvas Segmentation
                 graphics.DrawLine(Pens.Black, 0, 0, 0, -100000);
@@ -44,9 +47,11 @@ namespace Embryo.Graph
                 graphics.DrawString("Parent", ubuntuFont, Brushes.Black, 10, 20, format);
                 graphics.DrawString("Ingredients", ubuntuFont, Brushes.Black, -80, 20, format);
 
+                /*
                 GH_Palette palette = GH_Palette.Pink;
 
                 Color myColor = Color.LightGray;
+
                 
                 switch (Owner.RuntimeMessageLevel)
                 {
@@ -58,6 +63,7 @@ namespace Embryo.Graph
                         myColor = Color.Red;
                         break;
                 }
+                 
 
                 if (Owner.Hidden) myColor = Color.Gray;
                 if (Owner.Locked) myColor = Color.DarkGray;
@@ -71,9 +77,12 @@ namespace Embryo.Graph
 
                 base.RenderComponentCapsule(canvas, graphics, false, false, false, true, true, false);
 
+                
+
                 PointF iconLocation = new PointF(ContentBox.X-4, ContentBox.Y+70);
                 graphics.DrawImage(Owner.Icon_24x24, iconLocation);
-                
+                */
+
                 format.Dispose();
 
             }

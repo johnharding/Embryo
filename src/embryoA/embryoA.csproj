@@ -86,7 +86,6 @@
     <Compile Include="Graph\ColumnStep.cs" />
     <Compile Include="Graph\EmbryoInfo.cs" />
     <Compile Include="Graph\EmbryoSettings.cs" />
-    <Compile Include="Graph\EmbryoAbout.cs" />
     <Compile Include="Params\EM_InputParam.cs" />
     <Compile Include="Types\EM_Input.cs" />
     <Compile Include="Types\EM_Goo.cs" />
@@ -328,7 +327,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)Embryo.gha"</PostBuildEvent>
+    <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)Embryo.gha"
+Copy "$(TargetPath)" "C:\Users\je3-harding\AppData\Roaming\Grasshopper\Libraries\Embryo.gha"</PostBuildEvent>
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>

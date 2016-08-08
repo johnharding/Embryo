@@ -469,6 +469,7 @@ namespace Embryo.Graph
                 mySliders[i].Slider.SetSliderValue((decimal)(metricSeed[i%metricSeed.Count]));
                 mySliders[i].Slider.Slider.Type = Grasshopper.GUI.Base.GH_SliderAccuracy.Float;
                 mySliders[i].Slider.NickName = "G_Slider" + i.ToString();
+              
 
                 e.Document.AddObject(mySliders[i].Slider, false);
                 mySliders[i].Slider.Attributes.Pivot = new PointF(100f, -100 - (25 * i));
@@ -907,7 +908,7 @@ namespace Embryo.Graph
             Menu_AppendItem(menu, @"gh group page", gotoGrasshopperGroup);
             
         }
-
+        
         private void gotoGithub(Object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(@"https://github.com/johnharding/Embryo");

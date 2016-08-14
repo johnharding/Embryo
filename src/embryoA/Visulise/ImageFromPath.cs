@@ -12,7 +12,7 @@ namespace Embryo.Visulise
     {
 
         public ImageFromPath()
-            : base("ImageFromPath", "Image", "Displays an image at a given location", "Embryo", "Visulise")
+            : base("ImageFromPath", "Image", "Displays an image at a given location", "Embryo", "Visualise")
         {
         }
 

@@ -13,7 +13,7 @@ namespace Embryo.Visulise
     {
         
         public SpiderGraph()
-            : base("SpiderChart", "Spider", "Draws an n-legged spider of (normalised) data", "Embryo", "Visulise")
+            : base("SpiderChart", "Spider", "Draws an n-legged spider of (normalised) data", "Embryo", "Visualise")
         {
         }
 

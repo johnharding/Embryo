@@ -11,7 +11,7 @@ namespace Embryo.Visulise
     public class ScatterPlot : GH_Component
     {
         public ScatterPlot()
-            : base("ScatterPlot", "Scatter", "Draws an n-legged spider of (normalised) data", "Embryo", "Visulise")
+            : base("ScatterPlot", "Scatter", "Draws an n-legged spider of (normalised) data", "Embryo", "Visualise")
         {
         }
 

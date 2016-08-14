@@ -99,7 +99,7 @@
     <Compile Include="Graph\EmbryoMainAttrib.cs" />
     <Compile Include="Graph\EmbryoMain.cs" />
     <Compile Include="Utilities\BrepVolume.cs" />
-    <Compile Include="Utilities\ChildOutputPlugAttrib.cs" />
+    <None Include="Utilities\ChildOutputPlugAttrib.cs" />
     <Compile Include="Utilities\Counter.cs" />
     <Compile Include="Utilities\BrepArea.cs" />
     <Compile Include="Utilities\UnRoll.cs" />
@@ -110,7 +110,7 @@
     <Compile Include="Visulise\ScatterPlot.cs" />
     <Compile Include="Visulise\SpiderGraphAttrib.cs" />
     <Compile Include="Visulise\SpiderGraph.cs" />
-    <Compile Include="Utilities\ChildOutputPlug.cs" />
+    <None Include="Utilities\ChildOutputPlug.cs" />
     <Compile Include="Forms\EmbryoControl.cs">
       <SubType>Form</SubType>
     </Compile>

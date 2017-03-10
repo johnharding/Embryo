@@ -145,6 +145,9 @@
   <data name="E7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\E7.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="EmbryoIcon_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EmbryoIcon_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="EmbryoMain02" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\EmbryoMain02.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

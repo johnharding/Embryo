@@ -895,7 +895,7 @@ namespace Embryo.Graph
         {
             get
             {
-                return Properties.Resources.EmbryoMain02;
+                return Properties.Resources.EmbryoIcon_24;
             }
         }
 

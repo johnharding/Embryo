@@ -115,7 +115,7 @@ namespace Embryo.Generic
 
         // Default colour for Embryo components
         public static Color EM_Colour(){
-            return Color.FromArgb(255, 160, 160, 160);
+            return Color.SlateGray;
         }
 
         //public void RemoveObject(object sender, EventArgs e)

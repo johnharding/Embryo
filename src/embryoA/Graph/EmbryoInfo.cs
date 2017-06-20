@@ -21,7 +21,7 @@ namespace Embryo.Graph
         }
         public override string Version
         {
-            get { return "0.5.0"; }
+            get { return "0.5.1"; }
         }
         public override Guid Id
         {

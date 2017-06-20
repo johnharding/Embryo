@@ -69,7 +69,11 @@ namespace Embryo.Generic
                         // 11.Geometry
                         case "Grasshopper.Kernel.Parameters.Param_Geometry":
                             if (yourType == "Grasshopper.Kernel.Parameters.Param_Box"
-                             || yourType == "Grasshopper.Kernel.Parameters.Param_Geometry")
+                             || yourType == "Grasshopper.Kernel.Parameters.Param_Geometry"
+                             || yourType == "Grasshopper.Kernel.Parameters.Param_Circle"
+                             || yourType == "Grasshopper.Kernel.Parameters.Param_Arc"
+                             || yourType == "Grasshopper.Kernel.Parameters.Param_Line"
+                             || yourType == "Grasshopper.Kernel.Parameters.Param_Curve")
                             {
                                 myBool = true;
                             }

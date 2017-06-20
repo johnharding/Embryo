@@ -352,6 +352,23 @@ namespace Embryo.Graph
                             myCounter++;
                         }
                     }
+
+
+                    if (canvasObject[i].GetType().ToString() == "Grasshopper.Kernel.Special.GH_Cluster")
+                    {
+                        // TODO
+                        Grasshopper.Kernel.Special.GH_Cluster myObject = (Grasshopper.Kernel.Special.GH_Cluster)canvasObject[i];
+                        Grasshopper.Kernel.Special.GH_Cluster mySoupdragon = (Grasshopper.Kernel.Special.GH_Cluster)Instances.ComponentServer.EmitObject(myObject.ComponentGuid);
+
+                        mySoupdragon.CopyFrom(myObject);
+
+                        // Add the object and move it (could be done later)
+                        //e.Document.AddObject((Grasshopper.Kernel.Special.GH_Cluster)mySoupdragon, true);
+                        //e.Documentcanvas.InstantiateNewObject(mySoupdragon.InstanceGuid, null, new PointF(100, 50), false);
+                        e.Document.AddObject(mySoupdragon, false);
+                    }
+            
+
                 }
 
                 canvasObject.Clear();
@@ -666,7 +683,7 @@ namespace Embryo.Graph
                 myObject.ClearData();
                 myObject.CollectData();
                 myObject.ComputeData();
-            }    
+            }
  
         }
 

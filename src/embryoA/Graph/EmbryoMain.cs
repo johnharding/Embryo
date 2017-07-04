@@ -45,6 +45,8 @@ namespace Embryo.Graph
         private EM_SettingsParam myParam;
         private EM_Settings localSettings;
 
+        private List<Guid> clusterlist;
+
         // List of all the outputs in the generated graph
         private List<object> outputStash;
 
@@ -69,6 +71,7 @@ namespace Embryo.Graph
         private int inputCount;
         private int masterCounter;
 
+ 
         // Seeds that control graph generation. Metrics, Functions & Topology
         private List<double> metricSeed; 
         private List<int> functiSeed;
@@ -92,6 +95,8 @@ namespace Embryo.Graph
             componentGUIDs = new Dictionary<int, string>();
             ParentInputComponent = new List<GH_Component>();
             canvas = Instances.ActiveCanvas;
+
+            clusterlist = new List<Guid>();
 
             // Slider and Component counts
             sCount = 0;
@@ -228,7 +233,13 @@ namespace Embryo.Graph
             //this.ComputeData();
 
             ClearSolution(e.Document);
+            
+            // Cluster things
+            GH_DocumentIO parentIO = new GH_DocumentIO(e.Document);
+            GH_DocumentIO childIO = new GH_DocumentIO();
+            List<System.Guid> clusterlist = new List<System.Guid>();
 
+         
             #region 2. MasterCounter = 0 things
 
             // If this is the first iteration then get stuff
@@ -350,22 +361,21 @@ namespace Embryo.Graph
                         {
                             componentGUIDs.Add(myCounter, newGuid);
                             myCounter++;
+                            
                         }
+
+
                     }
 
 
                     if (canvasObject[i].GetType().ToString() == "Grasshopper.Kernel.Special.GH_Cluster")
                     {
                         // TODO
-                        Grasshopper.Kernel.Special.GH_Cluster myObject = (Grasshopper.Kernel.Special.GH_Cluster)canvasObject[i];
-                        Grasshopper.Kernel.Special.GH_Cluster mySoupdragon = (Grasshopper.Kernel.Special.GH_Cluster)Instances.ComponentServer.EmitObject(myObject.ComponentGuid);
 
-                        mySoupdragon.CopyFrom(myObject);
+                        Grasshopper.Kernel.Special.GH_Cluster myCluster = (Grasshopper.Kernel.Special.GH_Cluster)canvasObject[i];
+                        clusterlist.Add(myCluster.InstanceGuid);
+                        parentIO.Copy(GH_ClipboardType.Global, clusterlist);
 
-                        // Add the object and move it (could be done later)
-                        //e.Document.AddObject((Grasshopper.Kernel.Special.GH_Cluster)mySoupdragon, true);
-                        //e.Documentcanvas.InstantiateNewObject(mySoupdragon.InstanceGuid, null, new PointF(100, 50), false);
-                        e.Document.AddObject(mySoupdragon, false);
                     }
             
 
@@ -526,6 +536,7 @@ namespace Embryo.Graph
                 return;
             }
 
+
             #endregion
 
             #region 6. Hook up the components one by one
@@ -674,11 +685,23 @@ namespace Embryo.Graph
 
             masterCounter++;
 
+            if (clusterlist.Count > 0)
+            {
+                childIO.Paste(GH_ClipboardType.Global);
+                childIO.Document.SelectAll();
+                childIO.Document.TranslateObjects(new Size(20, 20), true);
+                childIO.Document.ExpireSolution();
+                childIO.Document.MutateAllIds();
+                childIO.Document.DeselectAll();
+                e.Document.DeselectAll();
+                e.Document.MergeDocument(childIO.Document);
+            }
+
             this.ExpireSolution(false);
 
             // Compute all objects downstream of this component (such as cognise ones)
-            List<IGH_ActiveObject> myList2 = OnPingDocument().FindAllDownstreamObjects(this);
-            foreach (IGH_ActiveObject myObject in myList2)
+            List<IGH_ActiveObject> downstreamObjects = OnPingDocument().FindAllDownstreamObjects(this);
+            foreach (IGH_ActiveObject myObject in downstreamObjects)
             {
                 myObject.ClearData();
                 myObject.CollectData();
@@ -686,6 +709,8 @@ namespace Embryo.Graph
             }
  
         }
+
+
 
         /// <summary> 
         /// Gets all the geometry from the child canvas and hooks up to the GetGeometry input
@@ -767,6 +792,7 @@ namespace Embryo.Graph
             // Now flush the myComponent list
             myComponents.Clear();
             mySliders.Clear();
+            clusterlist.Clear();
         }
 
         /// <summary> 

@@ -685,6 +685,7 @@ namespace Embryo.Graph
 
             masterCounter++;
 
+            // Cluster component test
             if (clusterlist.Count > 0)
             {
                 childIO.Paste(GH_ClipboardType.Global);

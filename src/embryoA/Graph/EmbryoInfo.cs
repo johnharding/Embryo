@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Embryo.Graph
 {
-    class EmbryoInfo : Grasshopper.Kernel.GH_AssemblyInfo
+    public class EmbryoInfo : Grasshopper.Kernel.GH_AssemblyInfo
     {
         public override string Description
         {

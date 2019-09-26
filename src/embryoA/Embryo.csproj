@@ -98,6 +98,7 @@
     <Compile Include="Graph\SortGraph.cs" />
     <Compile Include="Graph\EmbryoMainAttrib.cs" />
     <Compile Include="Graph\EmbryoMain.cs" />
+    <Compile Include="Utilities\RandomComponent.cs" />
     <Compile Include="Utilities\BrepVolume.cs" />
     <None Include="Utilities\ChildOutputPlugAttrib.cs" />
     <Compile Include="Utilities\Counter.cs" />
@@ -330,8 +331,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)Embryo.gha"
-Copy "$(TargetPath)" "C:\Users\je3-harding\AppData\Roaming\Grasshopper\Libraries\Embryo.gha"</PostBuildEvent>
+    <PostBuildEvent>Copy "$(TargetPath)" "%25appdata%25\Grasshopper\Libraries\Embryo.gha"</PostBuildEvent>
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>

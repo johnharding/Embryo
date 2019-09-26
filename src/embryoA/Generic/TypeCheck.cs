@@ -59,8 +59,9 @@ namespace Embryo.Generic
 
                         // 10.GenericObject
                         case "Grasshopper.Kernel.Parameters.Param_GenericObject":
-                            if (yourType == "Grasshopper.Kernel.Parameters.Param_Integer"
-                             || yourType == "Grasshopper.Kernel.Parameters.Param_Number")
+                        //if (yourType == "Grasshopper.Kernel.Parameters.Param_Integer"
+                        //|| yourType == "Grasshopper.Kernel.Parameters.Param_Number")
+                            if (yourType == "Grasshopper.Kernel.Parameters.Param_GenericObject")
                             {
                                 myBool = true;
                             }

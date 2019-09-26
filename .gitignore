@@ -184,3 +184,6 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 src/.vs/embryoA/v15/Server/sqlite3/db.lock
+src/.vs/embryoA/v15/Server/sqlite3/storage.ide
+src/.vs/embryoA/v15/Server/sqlite3/storage.ide-shm
+src/.vs/embryoA/v15/Server/sqlite3/storage.ide-wal

@@ -81,7 +81,7 @@ namespace Embryo.Graph
         /// Grasshopper constructor
         /// </summary> 
         public EmbryoMain()
-            : base("Embryo", "Embryo", "Generates new grasshopper networks automatically", "Embryo", " Parent")
+            : base("Embryo", "Embryo", "Generates new grasshopper networks automatically", "Embryo", "Parent")
         {
             masterCounter = 0;
             myComponents = new List<EM_Component>();

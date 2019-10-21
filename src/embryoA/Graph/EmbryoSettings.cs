@@ -25,7 +25,7 @@ namespace Embryo.Graph
         EM_Settings mySettings;
 
         public EmbryoSettings()
-            : base("Embryo Settings", "Embryo", "Settings Component for Embryo", "Embryo", " Parent")
+            : base("Embryo Settings", "Embryo", "Settings Component for Embryo", "Embryo", "Parent")
         {
             mySettings = new EM_Settings();
         }

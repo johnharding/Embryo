@@ -17,7 +17,7 @@ namespace Embryo.Utilities
         private EM_Default localDefault;
 
         public ParentInput()
-            : base("Parent Input", "", "This component tags input parameters that can be used by Embryo", "Embryo", " Parent")
+            : base("Parent Input", "", "This component tags input parameters that can be used by Embryo", "Embryo", "Parent")
         {
         }
 

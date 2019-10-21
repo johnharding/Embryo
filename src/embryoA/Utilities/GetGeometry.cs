@@ -13,7 +13,7 @@ namespace Embryo.Utilities
     public class GetGeometry : GH_Component
     {
         public GetGeometry()
-            : base("Get Geometry", "", "Gets the geometry from the child graph", "Embryo", " Parent")
+            : base("Get Geometry", "", "Gets the geometry from the child graph", "Embryo", "Parent")
         {
         }
 

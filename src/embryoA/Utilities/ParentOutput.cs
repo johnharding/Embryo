@@ -15,7 +15,7 @@ namespace Embryo.Utilities
         public bool selected;
 
         public ParentOutput()
-            : base("Parent Output", "", "This component tags output parameters that can be used by Embryo", "Embryo", " Parent")
+            : base("Parent Output", "", "This component tags output parameters that can be used by Embryo", "Embryo", "Parent")
         {
             selected = false;
         }

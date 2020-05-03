@@ -28,7 +28,7 @@ namespace Embryo.Params
         {
             get
             {
-                return GH_Exposure.hidden | GH_Exposure.hidden;
+                return GH_Exposure.primary | GH_Exposure.primary;
             }
         }
 
@@ -36,7 +36,6 @@ namespace Embryo.Params
         {
             get
             {
-                //TODO: return a proper icon here.
                 return Properties.Resources.SettingsParam01;
             }
         }
@@ -50,7 +49,6 @@ namespace Embryo.Params
         {
             return GH_GetterResult.success;
         }
-
 
     }
 }

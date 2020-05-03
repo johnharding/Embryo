@@ -12,10 +12,7 @@ using Grasshopper.Kernel.Types;
 using Embryo.Types;
 
 /**************************************************************************
- * Random graph main embryo component
- * 1D version as recommended by Millar (2003) for least constrained system
- * Can be changed to 2d cartesian system at a later date
- * Do we need a way to untangle the spaghetti or do we just embrace it?
+ Embryo - Copyright John Harding - johnharding@fastmail.fm
  **************************************************************************/
 
 namespace Embryo.Graph

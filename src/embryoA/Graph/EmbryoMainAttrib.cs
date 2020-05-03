@@ -17,8 +17,6 @@ namespace Embryo.Graph
             : base(owner)
         {
         }
-        
-       
 
         protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel)
         {
@@ -37,7 +35,7 @@ namespace Embryo.Graph
                 graphics.DrawLine(Pens.Black, 0, 0, -100000, 0);
                 graphics.FillEllipse(Brushes.Black, -2, -2, 4, 4);
 
-                Font ubuntuFont = new Font("ubuntu", 8);
+                Font ubuntuFont = new Font("Arial", 8);
                 StringFormat format = new StringFormat();
                 format.Alignment = StringAlignment.Near;
                 format.LineAlignment = StringAlignment.Center;
@@ -45,43 +43,7 @@ namespace Embryo.Graph
 
                 graphics.DrawString("Child", ubuntuFont, Brushes.Black, 10,-20, format);
                 graphics.DrawString("Parent", ubuntuFont, Brushes.Black, 10, 20, format);
-                graphics.DrawString("Ingredients", ubuntuFont, Brushes.Black, -80, 20, format);
-
-                /*
-                GH_Palette palette = GH_Palette.Pink;
-
-                Color myColor = Color.LightGray;
-
-                
-                switch (Owner.RuntimeMessageLevel)
-                {
-                    case GH_RuntimeMessageLevel.Warning:
-                        myColor = Color.Orange;
-                        break;
-
-                    case GH_RuntimeMessageLevel.Error:
-                        myColor = Color.Red;
-                        break;
-                }
-                 
-
-                if (Owner.Hidden) myColor = Color.Gray;
-                if (Owner.Locked) myColor = Color.DarkGray;
-
-                RectangleF myRect = new RectangleF(Bounds.Location, Bounds.Size);
-                GH_Capsule capsule = GH_Capsule.CreateCapsule(myRect, palette, 10, 0);
-
-                capsule.Render(graphics, myColor);
-                capsule.Dispose();
-                capsule = null;
-
-                base.RenderComponentCapsule(canvas, graphics, false, false, false, true, true, false);
-
-                
-
-                PointF iconLocation = new PointF(ContentBox.X-4, ContentBox.Y+70);
-                graphics.DrawImage(Owner.Icon_24x24, iconLocation);
-                */
+                graphics.DrawString("Ingredients", ubuntuFont, Brushes.Black, -100, 20, format);
 
                 format.Dispose();
 

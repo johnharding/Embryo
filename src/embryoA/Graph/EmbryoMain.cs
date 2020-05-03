@@ -53,8 +53,6 @@ namespace Embryo.Graph
         // List of outputs on the parent graph that are to be included
         List<object> willingOutput;
 
- 
-        
         // Create a dictionary that stores all of the component IDs to be used from the ingredient pool
         Dictionary<int, string> componentGUIDs;
         
@@ -70,7 +68,6 @@ namespace Embryo.Graph
         private int mySeed;
         private int inputCount;
         private int masterCounter;
-
  
         // Seeds that control graph generation. Metrics, Functions & Topology
         private List<double> metricSeed; 

@@ -1,19 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using Grasshopper.Kernel;
-using Embryo.Properties;
-using System.Collections.Generic;
-using Rhino;
-using Grasshopper;
 using Embryo.Generic;
-using System.Windows.Forms;
 using Embryo.Params;
 using Grasshopper.Kernel.Types;
 using Embryo.Types;
-
-/**************************************************************************
- Embryo - Copyright John Harding - johnharding@fastmail.fm
- **************************************************************************/
 
 namespace Embryo.Graph
 {
@@ -29,19 +20,18 @@ namespace Embryo.Graph
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pm)
         {
-            pm.AddBooleanParameter("Preview", "Pr", "Preview the components in the generated graph",GH_ParamAccess.item, true);
-            pm.AddIntervalParameter("Slider Domain", "SD", "Numeric domain for generated sliders", GH_ParamAccess.item, new Rhino.Geometry.Interval(-10.0, 10.0));
-            pm.AddBooleanParameter("One-to-One", "OO", "If true, each component output can only be used once", GH_ParamAccess.item, true);
-            pm.AddIntegerParameter("GridX", "GX", "Component spacing in the X direction (column spacing)", GH_ParamAccess.item, 120);
-            pm.AddIntegerParameter("GridY", "GY", "Component spacing in the Y direction (row spacing)", GH_ParamAccess.item, 120);
-            pm.AddBooleanParameter("Remove dead", "RD", "Removes components that have warnings or errors", GH_ParamAccess.item, true);
-            pm.AddBooleanParameter("Only Terminals", "OT", "Previews only terminal components (i.e. with no children)", GH_ParamAccess.item, false);
+            pm.AddBooleanParameter("Preview", "Preview", "Preview the components in the generated graph",GH_ParamAccess.item, true);
+            pm.AddIntervalParameter("SliderDomain", "SliderDomain", "Numeric domain for generated sliders", GH_ParamAccess.item, new Rhino.Geometry.Interval(-10.0, 10.0));
+            pm.AddBooleanParameter("One-to-One", "One-to-One", "If true, each component output can only be used once", GH_ParamAccess.item, true);
+            pm.AddIntegerParameter("X Spacing", "X Spacing", "Component spacing in the X direction (column spacing)", GH_ParamAccess.item, 120);
+            pm.AddIntegerParameter("Y Spacing", "Y Spacing", "Component spacing in the Y direction (row spacing)", GH_ParamAccess.item, 120);
+            pm.AddBooleanParameter("RemoveDead", "RemoveDead", "Removes components that have warnings or errors", GH_ParamAccess.item, true);
+            pm.AddBooleanParameter("TerminalsOnly", "TerminalsOnly", "Previews only terminal components (i.e. with no children)", GH_ParamAccess.item, false);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pm)
         {
-            //pm.AddIntegerParameter("", "", "", GH_ParamAccess.item);
-            pm.RegisterParam(new EM_SettingsParam(), "Settings", "Se", "User settings for Embryo");
+            pm.RegisterParam(new EM_SettingsParam(), "Settings", "Settings", "User settings for Embryo");
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -53,8 +43,8 @@ namespace Embryo.Graph
 
             Rhino.Geometry.Interval myInterval = new Rhino.Geometry.Interval(-10.0, 10.0);
             DA.GetData(1, ref myInterval);
-            Grasshopper.Kernel.Types.GH_Interval interval = new Grasshopper.Kernel.Types.GH_Interval();
-            Grasshopper.Kernel.GH_Convert.ToGHInterval(myInterval,  GH_Conversion.Primary, ref interval);
+            GH_Interval interval = new GH_Interval();
+            GH_Convert.ToGHInterval(myInterval,  GH_Conversion.Primary, ref interval);
 
             bool oneToOne = false;
             DA.GetData(2, ref oneToOne);
@@ -84,7 +74,7 @@ namespace Embryo.Graph
 
             // Finally, output the local settings file
             DA.SetData(0, mywrap);
-            //DA.SetData(0, 2);
+
         }
 
         public override Guid ComponentGuid

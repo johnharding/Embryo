@@ -35,20 +35,21 @@ namespace Embryo.Graph
                 graphics.DrawLine(Pens.Black, 0, 0, -100000, 0);
                 graphics.FillEllipse(Brushes.Black, -2, -2, 4, 4);
 
-                Font ubuntuFont = new Font("Arial", 8);
-                StringFormat format = new StringFormat();
-                format.Alignment = StringAlignment.Near;
-                format.LineAlignment = StringAlignment.Center;
-                format.Trimming = StringTrimming.EllipsisCharacter;
+                Font font = new Font("Arial", 8);
+                StringFormat format = new StringFormat
+                {
+                    Alignment = StringAlignment.Near,
+                    LineAlignment = StringAlignment.Center,
+                    Trimming = StringTrimming.EllipsisCharacter
+                };
 
-                graphics.DrawString("Child", ubuntuFont, Brushes.Black, 10,-20, format);
-                graphics.DrawString("Parent", ubuntuFont, Brushes.Black, 10, 20, format);
-                graphics.DrawString("Ingredients", ubuntuFont, Brushes.Black, -100, 20, format);
+                graphics.DrawString("Child", font, Brushes.Black, 10,-20, format);
+                graphics.DrawString("Parent", font, Brushes.Black, 10, 20, format);
+                graphics.DrawString("Ingredients", font, Brushes.Black, -70, 20, format);
 
                 format.Dispose();
 
             }
         }
-
     }
 }

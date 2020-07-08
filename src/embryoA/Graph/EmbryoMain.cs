@@ -1,15 +1,11 @@
-﻿using System;
-using System.Drawing;
-using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
-using Embryo.Properties;
-using System.Collections.Generic;
-using Rhino;
-using Grasshopper;
-using Embryo.Generic;
-using System.Windows.Forms;
+﻿using Embryo.Generic;
 using Embryo.Params;
 using Embryo.Types;
+using Grasshopper;
+using Grasshopper.Kernel;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 
 /**
  * 
@@ -38,28 +34,26 @@ namespace Embryo.Graph
         private List<EM_Component> myComponents;
         private List<EM_Component> existingComponents;
         private List<EM_Slider> mySliders;
-        private List<GH_Component> getGeometryComponents;
-        List<GH_Component> ParentInputComponent;
-        private List<IGH_Param> ParentInputParam;
         private List<EM_Plug> PlugObject;
         private EM_SettingsParam myParam;
         private EM_Settings localSettings;
 
-        private List<Guid> clusterlist;
+        // Embryo things on the canvas that we need to find
+        private List<GH_Component> getGeometryComponents;
+        private List<GH_Component> ParentInputComponent;
+        private List<IGH_Param> ParentInputParam;
 
-        // List of all the outputs in the generated graph
-        private List<object> outputStash;
-
-        // List of outputs on the parent graph that are to be included
-        List<object> willingOutput;
+        private List<Guid> clusterlist; // List of clusters on the canvas
+        private List<object> outputStash; // List of all the outputs in the generated graph
+        private List<object> willingOutput; // List of outputs on the parent graph that are to be included
 
         // Create a dictionary that stores all of the component IDs to be used from the ingredient pool
         Dictionary<int, string> componentGUIDs;
         
-        // The mystery component
+        // The mystery component that gets things to work
         private EM_Component Helper;
 
-        // Inputs from the Embryo Component
+        // Inputs from the Embryo Setgings Component
         private EM_Settings mySettings;
         private bool isCountdown;
         private Random randomMonkey;
@@ -78,7 +72,7 @@ namespace Embryo.Graph
         /// Grasshopper constructor
         /// </summary> 
         public EmbryoMain()
-            : base("Embryo", "Embryo", "Generates new grasshopper networks automatically", "Embryo", "Parent")
+            : base("Embryo", "Embryo", "Generates grasshopper definitions automatically", "Embryo", "Parent")
         {
             masterCounter = 0;
             myComponents = new List<EM_Component>();
@@ -93,6 +87,7 @@ namespace Embryo.Graph
             ParentInputComponent = new List<GH_Component>();
             canvas = Instances.ActiveCanvas;
 
+            // Clusters
             clusterlist = new List<Guid>();
 
             // Slider and Component counts
@@ -106,8 +101,8 @@ namespace Embryo.Graph
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pm)
         {
             pm.AddBooleanParameter("Reset", "Reset", "Resets the Embryo solution", GH_ParamAccess.item);
-            pm.AddIntegerParameter("Sliders", "Sliders", "The number of generated sliders in the new graph", GH_ParamAccess.item, 8);
-            pm.AddIntegerParameter("Components", "Components", "The number of generated components in the new graph", GH_ParamAccess.item, 16);
+            pm.AddIntegerParameter("SliderCount", "Sliders", "The number of generated sliders in the new graph", GH_ParamAccess.item, 8);
+            pm.AddIntegerParameter("ComponentCount", "Components", "The number of generated components in the new graph", GH_ParamAccess.item, 16);
             pm.AddNumberParameter("MetricGenes", "MetricGenes", "A list of genes that generate metric parameters", GH_ParamAccess.list, 2);
             pm.AddIntegerParameter("TopologyGenes", "TopologyGenes", "A list of genes that generate the topological structure", GH_ParamAccess.list, 2);
             pm.AddIntegerParameter("FunctionGenes", "FunctionGenes", "A list of genes that select components", GH_ParamAccess.list, 2);
@@ -119,7 +114,7 @@ namespace Embryo.Graph
             pm.AddParameter(myParam, "Settings", "Settings", "Embryo Settings", GH_ParamAccess.item);
 
             // The random override negates the need for 3 seeds and explores the whole solution space
-            pm.AddIntegerParameter("RandomOveride", "RandomOveride", "0 is default Embryo mapping behaviour. Anything positive will overide the genes and produce a random graph using this input as a seed", GH_ParamAccess.item, 0);
+            pm.AddIntegerParameter("RandomOverride", "RandomOverride", "0 is default Embryo mapping behaviour. Anything positive will overide the genes and produce a random graph using this input as a seed", GH_ParamAccess.item, 0);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pm)
@@ -130,65 +125,50 @@ namespace Embryo.Graph
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-
-            // Random seed for topology. My seed is now set to this.
+            // Random seed for topology.
             mySeed = 2;
             randomMonkey = new Random(mySeed);
 
-            // Get settings
-            EM_Goo temp = new EM_Goo();
-            if (!DA.GetData("Settings", ref temp)) { return; }
-            mySettings = (EM_Settings)temp.Value;
+            // Now the setup
+            bool resetData = false;
+            if (!DA.GetData("Reset", ref resetData)) { return; }
 
-            // One to One Settings
-            isCountdown = mySettings.OneToOne;
-
-            // Metric genes
             metricSeed = new List<double>();
-            DA.GetDataList<double>("MetricGenes", metricSeed);
-            
-            // Topology genes
             topoloSeed = new List<int>();
-            DA.GetDataList<int>("TopologyGenes", topoloSeed);
-
-            // Funcion genes
             functiSeed = new List<int>();
+
+            DA.GetData("Sliders", ref sCount);
+            DA.GetData("Components", ref cCount);
+            DA.GetDataList<double>("MetricGenes", metricSeed);
+            DA.GetDataList<int>("TopologyGenes", topoloSeed);
             DA.GetDataList<int>("FunctionGenes", functiSeed);
 
-            // Sliders to be generated
-            DA.GetData("Sliders", ref sCount);
+            EM_Goo temp = new EM_Goo();
+            if (!DA.GetData("Settings", ref temp)) { return; }
+            mySettings = temp.Value;
+            isCountdown = mySettings.OneToOne;
 
-            // Components to be generated
-            DA.GetData("Components", ref cCount);
-
-            // Now the setup
-            bool myData = false;
-            if (!DA.GetData("Reset", ref myData)) { return; }
-
-            int crazySeed = -1;
-            DA.GetData("RandomOveride", ref crazySeed);
+            int overrideSeed = -1;
+            DA.GetData("RandomOveride", ref overrideSeed);
             
-            // random override
-            if (crazySeed > 0)
+            // Check to see if a random override applies
+            if (overrideSeed > 0)
             {
                 metricSeed = new List<double>();
                 topoloSeed = new List<int>();
                 functiSeed = new List<int>();
-                Random rnd = new Random(crazySeed);
+                Random rnd = new Random(overrideSeed);
+
                 for(int i=0; i<=200; i++)
                 {
                     metricSeed.Add(rnd.NextDouble() * (mySettings.Interval.Value.Max - mySettings.Interval.Value.Min) + mySettings.Interval.Value.Min);
                     topoloSeed.Add(rnd.Next(0, 100000));
                     functiSeed.Add(rnd.Next(0, 100));
                 }
-
-                //Friends.ShuffleDoubles(metricSeed, crazySeed);
-                //Friends.ShuffleIntegers(topoloSeed, crazySeed);
-                //Friends.ShuffleIntegers(functiSeed, crazySeed);
             }
 
-            // Set up an event so that everything happens after Grasshopper expires the whole solution
-            if (!myData)
+            // Set up an event so that everything within ModifyComponents happens after Grasshopper expires the whole solution
+            if (!resetData)
             {
                 try
                 {
@@ -196,8 +176,9 @@ namespace Embryo.Graph
                 }
                 catch
                 {
-                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Something has gone seriously wrong, and to be honest I'm not sure what to do about it");
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "oops");
                 }
+
                 masterCounter = 0;
             }
 
@@ -209,15 +190,15 @@ namespace Embryo.Graph
                 }
                 catch
                 {
-                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Something has gone seriously wrong, and to be honest I'm not sure what to do about it");
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "oops");
                 }
+
                 canvas.Document.SolutionEnd += new GH_Document.SolutionEndEventHandler(ModifyComponents);
             }
 
             // This is the last thing that Embryo does.
             DA.SetData(0, masterCounter);
             DA.SetDataList(1, myComponents);
-
         }
 
         /// <summary> 
@@ -226,18 +207,14 @@ namespace Embryo.Graph
         public void ModifyComponents(object sender, GH_SolutionEventArgs e)
         {
 
-            //this.CollectData();
-            //this.ComputeData();
-
             ClearSolution(e.Document);
             
             // Cluster things
             GH_DocumentIO parentIO = new GH_DocumentIO(e.Document);
             GH_DocumentIO childIO = new GH_DocumentIO();
             List<System.Guid> clusterlist = new List<System.Guid>();
-
          
-            #region 2. MasterCounter = 0 things
+            #region 2. If initial iteration
 
             // If this is the first iteration then get stuff
             if (masterCounter == 0)
@@ -306,7 +283,7 @@ namespace Embryo.Graph
                                     {
                                         if (tempThing.Params.Input[k].Sources.Contains(InputComponent.Params.Output[0]))
                                         {
-                                            ParentInputParam.Add((IGH_Param)tempThing.Params.Input[k]);
+                                            ParentInputParam.Add(tempThing.Params.Input[k]);
                                             tempThing.Params.Input[k].RemoveAllSources();
 
                                             // Now put back the Embryo Component... Bah!
@@ -320,7 +297,7 @@ namespace Embryo.Graph
                                     IGH_Param tempThing2 = (IGH_Param)canvasObject[j];
                                     if (tempThing2.Sources.Contains(InputComponent.Params.Output[0]))
                                     {
-                                        ParentInputParam.Add((IGH_Param)tempThing2);
+                                        ParentInputParam.Add(tempThing2);
                                         tempThing2.RemoveAllSources();
 
                                         // Now put back the Embryo Component... Bah!
@@ -335,7 +312,7 @@ namespace Embryo.Graph
                     if (george == "56212076-52dd-44cc-aa82-aa5b31504302") getGeometryComponents.Add((GH_Component)canvasObject[i]);
                 }
 
-                // Get a list of (ingredient) components that are located at X<0
+                // Get a list of ingredient components that are located at X<0
                 for (int i = canvasObject.Count - 1; i >= 0; i--)
                 {
                     // If in the bottom left quadrant...
@@ -358,24 +335,16 @@ namespace Embryo.Graph
                         {
                             componentGUIDs.Add(myCounter, newGuid);
                             myCounter++;
-                            
                         }
-
-
                     }
 
-
+                    // TODO
                     if (canvasObject[i].GetType().ToString() == "Grasshopper.Kernel.Special.GH_Cluster")
                     {
-                        // TODO
-
                         Grasshopper.Kernel.Special.GH_Cluster myCluster = (Grasshopper.Kernel.Special.GH_Cluster)canvasObject[i];
                         clusterlist.Add(myCluster.InstanceGuid);
                         parentIO.Copy(GH_ClipboardType.Global, clusterlist);
-
                     }
-            
-
                 }
 
                 canvasObject.Clear();
@@ -406,6 +375,7 @@ namespace Embryo.Graph
                     }
                 }
 
+                /*
                 // Cycle through all canvas (now child) objects in order to get the existing components
                 for (int i = 0; i < canvasObject.Count; i++)
                 {
@@ -428,6 +398,7 @@ namespace Embryo.Graph
                         }
                     }
                 }
+                */
 
                 // Put back the plugs that have become detached
                 for (int n = 0; n < PlugObject.Count; n++)
@@ -494,7 +465,6 @@ namespace Embryo.Graph
                 mySliders[i].Slider.Slider.Type = Grasshopper.GUI.Base.GH_SliderAccuracy.Float;
                 mySliders[i].Slider.NickName = "G_Slider" + i.ToString();
               
-
                 e.Document.AddObject(mySliders[i].Slider, false);
                 mySliders[i].Slider.Attributes.Pivot = new PointF(100f, -100 - (25 * i));
 
@@ -516,13 +486,11 @@ namespace Embryo.Graph
                 myComponents.Add(eComponent);
 
                 // Add the object and move it (could be done later)
-                e.Document.AddObject((GH_Component)myComponents[i].Component, false);
-                //canvas.InstantiateNewObject(myComponents[i].Component, null, new PointF(100, 50), false);
+                e.Document.AddObject(myComponents[i].Component, false);
 
                 // Identify as a generated component
                 myComponents[i].Component.Message = "G";
                 myComponents[i].Component.NickName = "G_" + myComponents[i].Component.NickName;
-                //myComponents[i].Component.MutableNickName = false;
             }
 
             // Sanity Check just before we run the thing...
@@ -532,7 +500,6 @@ namespace Embryo.Graph
                 this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Not enough components");
                 return;
             }
-
 
             #endregion
 
@@ -846,7 +813,8 @@ namespace Embryo.Graph
                     if (thisComponent != null) thisComponent.Component.Message += "X";
                 }
 
-                else{
+                else
+                {
                     // Now select an outout from the valid stash.
                     // 4 Inputs default
                     if (KK < 4) index = topoloSeed[(II * 4 + KK) % topoloSeed.Count] % validStash.Count;

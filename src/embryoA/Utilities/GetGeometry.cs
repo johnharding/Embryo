@@ -20,6 +20,7 @@ namespace Embryo.Utilities
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddGeometryParameter("G", "G", "Collects geometry (Breps, Meshes, Surfaces, etc..) from the child graph", GH_ParamAccess.item);
+            pManager[0].WireDisplay = GH_ParamWireDisplay.faint;
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)

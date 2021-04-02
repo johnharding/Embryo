@@ -139,11 +139,8 @@ namespace Embryo.Graph
 
         }
 
-    
-
         public override Guid ComponentGuid
         {
-            //generated at http://www.newguid.com/
             get { return new Guid("85e917ed-7467-4e07-b14c-c6b95f9bc63c"); }
         }
 
@@ -151,6 +148,7 @@ namespace Embryo.Graph
         //{
         //    m_attributes = new EmbryoMainAttrib(this);
         //}
+
         public override GH_Exposure Exposure
         {
             get

@@ -88,6 +88,7 @@
     <Compile Include="Generic\EM_Slider.cs" />
     <Compile Include="Generic\EM_Settings.cs" />
     <Compile Include="Generic\EM_Component.cs" />
+    <Compile Include="Generic\RoundedRectangle.cs" />
     <Compile Include="Graph\ColumnStep.cs" />
     <Compile Include="Graph\EmbryoInfo.cs" />
     <Compile Include="Graph\EmbryoSettings.cs" />

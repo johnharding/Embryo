@@ -7,6 +7,7 @@ using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel.Attributes;
 using System.Collections.Generic;
 using Embryo.Generic;
+using System.Drawing.Drawing2D;
 
 namespace Embryo.Utilities
 {
@@ -50,27 +51,19 @@ namespace Embryo.Utilities
             if (channel == GH_CanvasChannel.Objects)
             {
 
-                //base.Render(canvas, graphics, channel);
+                Pen myPen = new Pen(Color.FromArgb(255, 50, 50, 50));
+                myPen.Width = 2;
+                SolidBrush myBrush = new SolidBrush(Color.FromArgb(255, 255, 255));
+                SolidBrush myBrush2 = new SolidBrush(Color.FromArgb(50, 50, 50));
 
-                Pen myPen;
-                SolidBrush myBrush;
+                graphics.DrawEllipse(myPen, Bounds.Location.X - 1 - 4, Bounds.Location.Y + 16 - 4, 8, 8);
 
-                if (Owner.RuntimeMessageLevel == GH_RuntimeMessageLevel.Blank)
-                {
-                    myPen = new Pen(Color.Black, 3);
-                    myBrush = new SolidBrush(Color.Black);
-                }
-                else
-                {
-                    myPen = new Pen(Friends.EM_Colour(), 3);
-                    myBrush = new SolidBrush(Friends.EM_Colour());
-                }
+                Rectangle myRect = new Rectangle((int)Bounds.Location.X, (int)Bounds.Location.Y, (int)Bounds.Width, (int)Bounds.Height);
+                GraphicsPath p = RoundedRectangle.Create(myRect, 3);
 
-                graphics.FillEllipse(myBrush, Bounds.Location.X -1- 4, Bounds.Location.Y + 16 - 4, 8, 8);
-                graphics.FillRectangle(myBrush, Rectangle.Round(Bounds));
-                graphics.DrawRectangle(myPen, Rectangle.Round(Bounds));
-                
-                //RenderComponentParameters(canvas, graphics, Owner, new GH_PaletteStyle(Color.Azure));
+                graphics.DrawPath(myPen, p);
+                graphics.FillPath(myBrush, p);
+                graphics.FillEllipse(myBrush, Bounds.Location.X - 1 - 4, Bounds.Location.Y + 16 - 4, 8, 8);
 
                 PointF iconLocation = new PointF(Pivot.X + 8, Pivot.Y + 4);
                 graphics.DrawImage(Owner.Icon_24x24, iconLocation);

@@ -79,7 +79,6 @@ namespace Embryo.Graph
 
         public override Guid ComponentGuid
         {
-            //generated at http://www.newguid.com/
             get { return new Guid("1990a9c5-d815-4d82-808e-112b91834659"); }
         }
 

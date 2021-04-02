@@ -32,7 +32,6 @@ namespace Embryo.Graph
 
         // Lists of Embryo things
         private List<EM_Component> myComponents;
-        private List<EM_Component> existingComponents;
         private List<EM_Slider> mySliders;
         private List<EM_Plug> PlugObject;
         private EM_SettingsParam myParam;
@@ -76,7 +75,6 @@ namespace Embryo.Graph
         {
             masterCounter = 0;
             myComponents = new List<EM_Component>();
-            existingComponents = new List<EM_Component>();
             mySliders = new List<EM_Slider>();
             outputStash = new List<object>();
             willingOutput = new List<object>();
@@ -101,8 +99,8 @@ namespace Embryo.Graph
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pm)
         {
             pm.AddBooleanParameter("Reset", "Reset", "Resets the Embryo solution", GH_ParamAccess.item);
-            pm.AddIntegerParameter("SliderCount", "Sliders", "The number of generated sliders in the new graph", GH_ParamAccess.item, 8);
-            pm.AddIntegerParameter("ComponentCount", "Components", "The number of generated components in the new graph", GH_ParamAccess.item, 16);
+            pm.AddIntegerParameter("Sliders", "Sliders", "The number of generated sliders in the new graph", GH_ParamAccess.item, 8);
+            pm.AddIntegerParameter("Components", "Components", "The number of generated components in the new graph", GH_ParamAccess.item, 16);
             pm.AddNumberParameter("MetricGenes", "MetricGenes", "A list of genes that generate metric parameters", GH_ParamAccess.list, 2);
             pm.AddIntegerParameter("TopologyGenes", "TopologyGenes", "A list of genes that generate the topological structure", GH_ParamAccess.list, 2);
             pm.AddIntegerParameter("FunctionGenes", "FunctionGenes", "A list of genes that select components", GH_ParamAccess.list, 2);
@@ -131,25 +129,25 @@ namespace Embryo.Graph
 
             // Now the setup
             bool resetData = false;
-            if (!DA.GetData("Reset", ref resetData)) { return; }
+            if (!DA.GetData(0, ref resetData)) { return; }
 
             metricSeed = new List<double>();
             topoloSeed = new List<int>();
             functiSeed = new List<int>();
 
-            DA.GetData("Sliders", ref sCount);
-            DA.GetData("Components", ref cCount);
-            DA.GetDataList<double>("MetricGenes", metricSeed);
-            DA.GetDataList<int>("TopologyGenes", topoloSeed);
-            DA.GetDataList<int>("FunctionGenes", functiSeed);
+            DA.GetData(1, ref sCount);
+            DA.GetData(2, ref cCount);
+            DA.GetDataList<double>(3, metricSeed);
+            DA.GetDataList<int>(4, topoloSeed);
+            DA.GetDataList<int>(5, functiSeed);
 
             EM_Goo temp = new EM_Goo();
-            if (!DA.GetData("Settings", ref temp)) { return; }
+            if (!DA.GetData(6, ref temp)) { return; }
             mySettings = temp.Value;
             isCountdown = mySettings.OneToOne;
 
             int overrideSeed = -1;
-            DA.GetData("RandomOveride", ref overrideSeed);
+            DA.GetData(7, ref overrideSeed);
             
             // Check to see if a random override applies
             if (overrideSeed > 0)
@@ -208,12 +206,12 @@ namespace Embryo.Graph
         {
 
             ClearSolution(e.Document);
-            
+
             // Cluster things
             GH_DocumentIO parentIO = new GH_DocumentIO(e.Document);
             GH_DocumentIO childIO = new GH_DocumentIO();
             List<System.Guid> clusterlist = new List<System.Guid>();
-         
+
             #region 2. If initial iteration
 
             // If this is the first iteration then get stuff
@@ -227,7 +225,7 @@ namespace Embryo.Graph
 
                 // Check for Embryo Components on the canvas
                 for (int i = 0; i < canvasObject.Count; i++)
-                {              
+                {
                     string george = canvasObject[i].ComponentGuid.ToString();
 
                     // 1. Parent Outputs
@@ -288,6 +286,7 @@ namespace Embryo.Graph
 
                                             // Now put back the Embryo Component... Bah!
                                             tempThing.Params.Input[k].AddSource(InputComponent.Params.Output[0]);
+                                            tempThing.Params.Input[k].WireDisplay = GH_ParamWireDisplay.faint;
                                         }
                                     }
                                 }
@@ -302,6 +301,7 @@ namespace Embryo.Graph
 
                                         // Now put back the Embryo Component... Bah!
                                         tempThing2.AddSource(InputComponent.Params.Output[0]);
+                                        tempThing2.WireDisplay = GH_ParamWireDisplay.faint;
                                     }
                                 }
                             }
@@ -375,31 +375,6 @@ namespace Embryo.Graph
                     }
                 }
 
-                /*
-                // Cycle through all canvas (now child) objects in order to get the existing components
-                for (int i = 0; i < canvasObject.Count; i++)
-                {
-                    string newGuid = canvasObject[i].ComponentGuid.ToString();
-                    string newType = StringTool.Truncate(canvasObject[i].GetType().ToString(), 26);
-
-                    // Make sure that we do not add ourselves or special components (i.e. buttons & sliders)
-                    if (newType != "Grasshopper.Kernel.Special")
-                    {
-                        if (canvasObject[i].Locked != true)
-                        {
-                            EM_Component eComponent = new EM_Component((GH_Component)canvasObject[i], true);
-
-                            // This seems to reset the objects so that it works
-                            OnPingDocument().RemoveObject(eComponent.Component, false);
-                            OnPingDocument().AddObject(eComponent.Component, false);
-                            existingComponents.Add(eComponent);
-
-                            // Note don't add to the stash yet. You may up with cyclic dependencies.
-                        }
-                    }
-                }
-                */
-
                 // Put back the plugs that have become detached
                 for (int n = 0; n < PlugObject.Count; n++)
                 {
@@ -409,16 +384,15 @@ namespace Embryo.Graph
                 // Raise some errors if we haven't collected enough things
                 if (ingredientCount == 0 && cCount > 0)
                 {
-                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "You must add some ingredient components or set the required number of components to zero!");
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "You must add some ingredient components");
                     return;
                 }
-                if (cCount == 0 && existingComponents.Count == 0)
+                if (cCount == 0)
                 {
-                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "If you are not generating any new components, you probably need to add some existing ones to the child canvas");
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "No components to be generated");
                     return;
                 }
 
-                
             }
 
             #endregion (End of masterCounter == 0)
@@ -426,22 +400,11 @@ namespace Embryo.Graph
             #region 3. Final Events before generation
 
             // Add the willingobjects to the outputStash
-            for (int i = 0; i < willingOutput.Count; i++) outputStash.Add(willingOutput[i]);
-
-            // Add the list of existing components in the initial order that they were.
-            for (int i = 0; i < existingComponents.Count; i++)
-            {
-                // Clear all existing input connections (not output, we still need the plugs)
-                for (int k = 0; k < existingComponents[i].Component.Params.Input.Count; k++)
-                {
-                    existingComponents[i].Component.Params.Input[k].RemoveAllSources();
-                }
-
-                existingComponents[i].Component.Message = "E";
-                existingComponents[i].isExisting = true;
-
-                myComponents.Add(existingComponents[i]);
+            for (int i = 0; i < willingOutput.Count; i++)
+            { 
+            outputStash.Add(willingOutput[i]);
             }
+
 
             #endregion
 
@@ -475,11 +438,10 @@ namespace Embryo.Graph
             #region 5. Make the NEW components and add them to the canvas
 
             // Start by adding a load of new components on top of the existing ones.
-            for (int i = existingComponents.Count; i < (cCount + existingComponents.Count); i++)
+            for (int i = 0; i < cCount; i++)
             {
                 // Select a component at random
-                int functiIndex = i - existingComponents.Count;
-                int compRef = functiSeed[functiIndex % functiSeed.Count] % componentGUIDs.Count;
+                int compRef = functiSeed[i % functiSeed.Count] % componentGUIDs.Count;
 
                 // Add the component to the list
                 EM_Component eComponent = new EM_Component((GH_Component)Instances.ComponentServer.EmitObject(new Guid(componentGUIDs[compRef])), false);
@@ -765,7 +727,6 @@ namespace Embryo.Graph
         /// </summary> 
         public void ClearEverything()
         {
-            existingComponents.Clear();
             componentGUIDs.Clear();
             myComponents.Clear();
             mySliders.Clear();
@@ -883,7 +844,6 @@ namespace Embryo.Graph
 
         public override Guid ComponentGuid
         {
-            //generated at http://www.newguid.com/
             get { return new Guid("965d8426-5a7d-4fe2-b886-583044f9884e"); }
         }
 
@@ -908,14 +868,11 @@ namespace Embryo.Graph
             }
         }
 
-
-
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
             Menu_AppendItem(menu, @"github source", gotoGithub);
             Menu_AppendItem(menu, @"gh group page", gotoGrasshopperGroup);
-            
         }
         
         private void gotoGithub(Object sender, EventArgs e)

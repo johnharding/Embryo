@@ -17,7 +17,7 @@ namespace Embryo.Utilities
         private EM_Default localDefault;
 
         public ParentInput()
-            : base("Parent Input", "", "This component tags input parameters that can be used by Embryo", "Embryo", "Parent")
+            : base("Embryo Input", "Embryo Input", "Tag parameters on the parent cavas that can be used by Embryo as inputs", "Embryo", "Parent")
         {
         }
 
@@ -31,7 +31,9 @@ namespace Embryo.Utilities
             myParam = new EM_InputParam();
             localDefault = new EM_Default();
             myParam.PersistentData.Append(new EM_Input(localDefault));
-            pManager.AddParameter(myParam, "I", "I", "Attach to the input parameter to be used by Embryo", GH_ParamAccess.item);
+            pManager.AddParameter(myParam, "I", "I", "Connect to any parameters on the parent canvas that can be used by Embryo as inputs", GH_ParamAccess.item);
+
+            pManager[0].WireDisplay = GH_ParamWireDisplay.faint;
         }
 
         //SolveInstance is a method in the GH_Component class

@@ -15,20 +15,21 @@ namespace Embryo.Utilities
         public bool selected;
 
         public ParentOutput()
-            : base("Parent Output", "", "This component tags output parameters that can be used by Embryo", "Embryo", "Parent")
+            : base("Embryo Output", "Embryo Output", "Tag parameters on the parent cavas that can be used by Embryo as outputs", "Embryo", "Parent")
         {
             selected = false;
         }
 
         //will this be here?
         //I presume that override overides the inherited methods?
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("O", "O", "Attach to the output parameter to be used by Embryo", GH_ParamAccess.item);
+            pManager.AddGenericParameter("O", "O", "Connect to any parameters on the parent canvas that can be used by Embryo as outputs", GH_ParamAccess.item);
+            pManager[0].WireDisplay = GH_ParamWireDisplay.faint;
         }
 
 
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
         }
 
